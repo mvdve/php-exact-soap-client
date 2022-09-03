@@ -1,0 +1,22 @@
+{
+    "name": "tenpitch/exact-soap-client",
+    "description": "Client for connecting to Exact globe entity services",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Matijs van de Venne",
+            "email": "mathijs@tenpitch.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=8.0",
+        "ext-soap": "*",
+        "ext-curl": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "ExactSoapClient\\": "src"
+        }
+    }
+}

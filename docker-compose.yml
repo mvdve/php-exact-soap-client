@@ -1,0 +1,7 @@
+# Webshop webservice
+version: "3.3"
+services:
+  php:
+    build: ./
+    volumes:
+      - ./:/var/www/html
