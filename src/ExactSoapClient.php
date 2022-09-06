@@ -9,6 +9,12 @@ use SoapVar;
 
 class ExactSoapClient extends \SoapClient {
 
+    const ACTION_CREATE = "Create";
+    const ACTION_RETRIEVE = "Retrieve";
+    const ACTION_UPDATE = "Update";
+    const ACTION_SAVE = "Save";
+    const ACTION_DELETE = "Delete";
+
     private ExactSoapConfig $config;
     private string $destination;
 
@@ -131,6 +137,8 @@ class ExactSoapClient extends \SoapClient {
     /**
      * Executes SOAP call. And get the wanted property from the result object.
      *
+     * @param string $action
+     *   See list of action so class constants.
      * @param string $entity
      * @param array $data
      * @param string $property_name
@@ -139,10 +147,10 @@ class ExactSoapClient extends \SoapClient {
      *
      * @throws ExactSoapException
      */
-    public function callSoapGetProperty(string $entity, array $data, string $property_name) : string {
+    public function callSoapGetProperty(string $action, string $entity, array $data, string $property_name) : string {
         try {
-            $params = $this->buildEntityData("Create", $entity, $data);
-            $result = $this->Create(new SoapParam($params, "Create"));
+            $params = $this->buildEntityData($action, $entity, $data);
+            $result = $this->{$action}(new SoapParam($params, "Create"));
 
             if ($result === null) {
                 $error = $this->__getLastResponse();
