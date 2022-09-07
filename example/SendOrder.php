@@ -30,7 +30,7 @@ function sendOrder(array $order_header, array $order_lines): void {
                 $data['TransactionKey'] = $transaction_key;
             }
 
-            $transaction_key = $soapClient->callSoapGetProperty('SalesOrderLine', $data, 'TransactionKey');
+            $transaction_key = $soapClient->callSoapGetProperty(ExactSoapClient::ACTION_CREATE,'SalesOrderLine', $data, 'TransactionKey');
         }
 
         // When values are omitted, for example the InvoiceDebtor or DeliveryDebtor, Exact will autofill the field.
@@ -68,7 +68,7 @@ function sendOrder(array $order_header, array $order_lines): void {
             }
         }
 
-        $order_nr = $soapClient->callSoapGetProperty('SalesOrderHeader', $data, 'SalesOrderNumber');
+        $order_nr = $soapClient->callSoapGetProperty(ExactSoapClient::ACTION_CREATE,'SalesOrderHeader', $data, 'SalesOrderNumber');
 
         // Do something nice with the returned order nr.
     } catch (\Exception $ex) {
