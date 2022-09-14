@@ -1,6 +1,6 @@
 FROM php:8.0.13-cli-buster
 
-RUN apt-get update && apt-get -y install libxml2-dev
+RUN apt-get update && apt-get -y install libxml2-dev git && apt-get clean
 
 RUN docker-php-ext-install soap
 

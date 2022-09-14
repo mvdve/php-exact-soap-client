@@ -114,10 +114,10 @@ class ExactSoapClient extends \SoapClient {
             // to be deserialized as an object. Please use XmlNode[] to deserialize this pattern of XML.
             switch ($value) {
                 case is_int($value):
-                    $property_data[] = new SoapVar($value, XSD_STRING, 'int', 'http://www.w3.org/2001/XMLSchema', 'Value', $ns_schema);
+                    $property_data[] = new SoapVar($value, XSD_INT, 'int', 'http://www.w3.org/2001/XMLSchema', 'Value', $ns_schema);
                     break;
                 case is_float($value):
-                    $property_data[] = new SoapVar($value, XSD_STRING, 'float', 'http://www.w3.org/2001/XMLSchema', 'Value', $ns_schema);
+                    $property_data[] = new SoapVar($value, XSD_FLOAT, 'float', 'http://www.w3.org/2001/XMLSchema', 'Value', $ns_schema);
                     break;
                 default:
                     $property_data[] = new SoapVar($value, XSD_STRING, 'string', 'http://www.w3.org/2001/XMLSchema', 'Value', $ns_schema);

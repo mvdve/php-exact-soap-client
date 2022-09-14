@@ -1,6 +1,8 @@
 # PHP Exact Globe soap client
 
-This module is a simple PHP soap wrapper which implements Exact Globe specific functionality.
+This module is a simple PHP soap wrapper which implements Exact Globe specific functionality like NTLM authentication. 
+It is still in 
+development but fully functional for sending orders.
 
 ## Entity services access
 
@@ -13,7 +15,7 @@ Now add the mac address within field 'MachineName' and 'MacAddress2'.
 ## Docker
 Update composer by running the command:
 
-    `docker-compose run --rm php bash -c "cd /var/www/html && composer update"`
+    docker-compose run --rm php bash -c "cd /var/www/html && composer update"
 
 ## Examples
 
