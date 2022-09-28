@@ -162,6 +162,10 @@ class ExactSoapClient extends \SoapClient {
             throw new ExactSoapException('The Exact entity services returned an error: ' . $ex . PHP_EOL . ' Message: ' . htmlspecialchars(print_r($error, true)));
         }
 
+        if (!$property_name) {
+            return "";
+        }
+
         if ($action === self::ACTION_CREATE) {
             if (empty($result->CreateResult->Properties->PropertyData) || !is_array($result->CreateResult->Properties->PropertyData)) {
                 throw new ExactSoapException('No PropertyData found in the soap result, result: ' . htmlspecialchars(print_r($result, true)));
