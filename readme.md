@@ -2,7 +2,7 @@
 
 This module is a simple PHP soap wrapper which implements Exact Globe specific functionality like NTLM authentication. 
 It is still in 
-development but fully functional for sending orders.
+development but fully functional for sending or updating data.
 
 ## Entity services access
 

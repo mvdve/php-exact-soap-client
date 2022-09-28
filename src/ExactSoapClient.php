@@ -141,16 +141,16 @@ class ExactSoapClient extends \SoapClient {
      *   See list of action so class constants.
      * @param string $entity
      * @param array $data
-     * @param string $property_name
+     * @param string|null $property_name
      *
      * @return string
      *
      * @throws ExactSoapException
      */
-    public function callSoapGetProperty(string $action, string $entity, array $data, string $property_name) : string {
+    public function callSoapGetProperty(string $action, string $entity, array $data, string $property_name = null): string {
         try {
             $params = $this->buildEntityData($action, $entity, $data);
-            $result = $this->{$action}(new SoapParam($params, "Create"));
+            $result = $this->{$action}(new SoapParam($params, $action));
 
             if ($result === null) {
                 $error = $this->__getLastResponse();
@@ -162,17 +162,24 @@ class ExactSoapClient extends \SoapClient {
             throw new ExactSoapException('The Exact entity services returned an error: ' . $ex . PHP_EOL . ' Message: ' . htmlspecialchars(print_r($error, true)));
         }
 
-        if (empty($result->CreateResult->Properties->PropertyData) || !is_array($result->CreateResult->Properties->PropertyData)) {
-            throw new ExactSoapException('No PropertyData found in the soap result, result: ' . htmlspecialchars(print_r($result, true)));
-        }
+        if ($action === self::ACTION_CREATE) {
+            if (empty($result->CreateResult->Properties->PropertyData) || !is_array($result->CreateResult->Properties->PropertyData)) {
+                throw new ExactSoapException('No PropertyData found in the soap result, result: ' . htmlspecialchars(print_r($result, true)));
+            }
 
-        // Each property has 3 keys: Name / NoRights / Value. NoRights is always empty.
-        foreach ($result->CreateResult->Properties->PropertyData as $property) {
-            if (isset($property->Name) && $property->Name === $property_name) {
-                if (!empty($property->Value)) {
-                    return $property->Value;
+            // Each property has 3 keys: Name / NoRights / Value. NoRights is always empty.
+            foreach ($result->CreateResult->Properties->PropertyData as $property) {
+                if (isset($property->Name) && $property->Name === $property_name) {
+                    if (!empty($property->Value)) {
+                        return $property->Value;
+                    }
                 }
             }
+        }
+
+        if ($action === self::ACTION_UPDATE) {
+            // An update call returns nothing, just a 200 http code.
+            return "";
         }
 
         throw new ExactSoapException("The Exact entity services result did not contain the property $property_name, result: " . htmlspecialchars(print_r($result, true)));
